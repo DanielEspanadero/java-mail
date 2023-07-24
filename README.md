@@ -1,6 +1,6 @@
 # ENVIAR CORREOS CON JAVA MAIL
 
-![Demo](https://github.com/DanielEspanadero/concurrence-hair-salon/blob/main/docs/java.jpg)
+![Demo](https://github.com/DanielEspanadero/java-mail/blob/main/docs/javamail.jpg)
 
 Este proyecto es una aplicación Java que permite enviar correos electrónicos utilizando el servidor SMTP de Gmail. Está implementado como una aplicación Spring Boot con los siguientes componentes clave:
 
