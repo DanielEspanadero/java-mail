@@ -4,12 +4,9 @@ public class CorreoRequest {
     private String destinatario;
     private String asunto;
 
-    // Agrega constructor, getters y setters
-    // Constructor
     public CorreoRequest() {
     }
 
-    // Getters y setters
     public String getDestinatario() {
         return destinatario;
     }

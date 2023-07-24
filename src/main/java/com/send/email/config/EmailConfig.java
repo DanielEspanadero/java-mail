@@ -21,7 +21,6 @@ public class EmailConfig {
     @Value("${email.password}")
     private String password;
 
-    // Configura las propiedades del servidor de correo
     private Properties getMailProperties() {
         Properties properties = new Properties();
         properties.put("mail.smtp.auth", "true");
@@ -31,7 +30,6 @@ public class EmailConfig {
         return properties;
     }
 
-    // Configura el bean para enviar correos electrónicos
     @Bean
     public JavaMailSender javaMailSender() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
@@ -40,7 +38,6 @@ public class EmailConfig {
         mailSender.setPassword(password);
         return mailSender;
     }
-
 
     @Bean
     public ResourceLoader resourceLoader() {

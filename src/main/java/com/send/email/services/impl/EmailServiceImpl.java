@@ -25,7 +25,6 @@ public class EmailServiceImpl implements IEmailService {
     }
 
     private String cargarContenidoCorreo() throws IOException {
-        // Cargar el archivo email.html desde la carpeta templates
         File file = new ClassPathResource("templates/email.html").getFile();
         return new String(Files.readAllBytes(file.toPath()), StandardCharsets.UTF_8);
     }
@@ -33,20 +32,16 @@ public class EmailServiceImpl implements IEmailService {
     @Override
     public void enviarCorreo(CorreoRequest correoRequest) {
         try {
-            // Crear un objeto MimeMessage para enviar correos con contenido HTML
             MimeMessage message = javaMailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true, StandardCharsets.UTF_8.name());
 
             helper.setTo(correoRequest.getDestinatario());
             helper.setSubject(correoRequest.getAsunto());
 
-            // Cargar el contenido HTML desde el archivo
             String contenidoHtml = cargarContenidoCorreo();
 
-            // Configurar el contenido del correo como HTML
             helper.setText(contenidoHtml, true);
 
-            // Enviar el correo
             javaMailSender.send(message);
         } catch (Exception e) {
             throw new RuntimeException("Error al enviar el correo: " + e.getMessage(), e);
