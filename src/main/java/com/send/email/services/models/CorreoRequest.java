@@ -1,8 +1,9 @@
-package com.send.email.entity;
+package com.send.email.services.models;
 
 public class CorreoRequest {
     private String destinatario;
     private String asunto;
+    private String mensaje;
 
     public CorreoRequest() {
     }
@@ -21,6 +22,14 @@ public class CorreoRequest {
 
     public void setAsunto(String asunto) {
         this.asunto = asunto;
+    }
+
+    public String getMensaje() {
+        return mensaje;
+    }
+
+    public void setMensaje(String mensaje) {
+        this.mensaje = mensaje;
     }
 }
 

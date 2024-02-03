@@ -1,44 +1,38 @@
 package com.send.email.services.impl;
 
-import com.send.email.entity.CorreoRequest;
+import com.send.email.services.models.CorreoRequest;
 import com.send.email.services.IEmailService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
 
 import javax.mail.internet.MimeMessage;
-import java.io.File;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
 
 @Service
 public class EmailServiceImpl implements IEmailService {
-
     private final JavaMailSender javaMailSender;
+    private final TemplateEngine templateEngine;
 
-    @Autowired
-    public EmailServiceImpl(JavaMailSender javaMailSender) {
+    public EmailServiceImpl(JavaMailSender javaMailSender, TemplateEngine templateEngine) {
         this.javaMailSender = javaMailSender;
-    }
-
-    private String cargarContenidoCorreo() throws IOException {
-        File file = new ClassPathResource("templates/email.html").getFile();
-        return new String(Files.readAllBytes(file.toPath()), StandardCharsets.UTF_8);
+        this.templateEngine = templateEngine;
     }
 
     @Override
     public void enviarCorreo(CorreoRequest correoRequest) {
         try {
             MimeMessage message = javaMailSender.createMimeMessage();
-            MimeMessageHelper helper = new MimeMessageHelper(message, true, StandardCharsets.UTF_8.name());
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
 
             helper.setTo(correoRequest.getDestinatario());
             helper.setSubject(correoRequest.getAsunto());
 
-            String contenidoHtml = cargarContenidoCorreo();
+            // Procesar la plantilla Thymeleaf
+            Context context = new Context();
+            context.setVariable("mensaje", correoRequest.getMensaje());
+            String contenidoHtml = templateEngine.process("email", context);
 
             helper.setText(contenidoHtml, true);
 

@@ -1,6 +1,6 @@
 package com.send.email.controllers;
 
-import com.send.email.entity.CorreoRequest;
+import com.send.email.services.models.CorreoRequest;
 import com.send.email.services.IEmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,7 +17,7 @@ public class EmailController {
     @Autowired
     IEmailService emailService;
 
-    @PostMapping("/enviar_correo")
+    @PostMapping("/enviar-correo")
     public ResponseEntity<String> enviarCorreo(@RequestBody CorreoRequest correoRequest) {
         try {
             emailService.enviarCorreo(correoRequest);
